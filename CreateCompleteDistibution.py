@@ -7,7 +7,7 @@ LANGS = ["bul", "ces", "dan", "deu", "ell", "eng", "est", "fin", "fra", "gle", "
 
 
 def loadCompleteDistro():
-    filename = 'coredata\\CoreDistro'
+    filename = 'CoreDistro'
 
     with open(filename, 'rb') as file:
         DistroCore = pickle.load(file)
@@ -16,7 +16,7 @@ def loadCompleteDistro():
 
 
 def saveCompleteDistro():
-    filename = 'coredata\\CoreDistro'
+    filename = 'CoreDistro'
     print("Starting loading lang distribution...")
     DistroCore = {}
     i = 0
