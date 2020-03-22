@@ -4,8 +4,8 @@ import dictfunctions as df
 NO_ALFACHARACTERS = [' ', '!', '\"', '#', '$', '%', '&', '\'', '(', ')', '*', '@', '[', '\\', ']', '^', '_', '`', '{',
                      '|', '}', '~', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '\n', '?', ',', '.', '/', '-',
                      '–',
-                     '+', '=', ';', '<', '>', ':', '’', '”', '„', '']
-MINIMAL_OCCURANCE = 20
+                     '+', '=', ';', '<', '>', ':', '’', '”', '„', '“', ]
+MINIMAL_OCCURANCE = 30
 
 
 def standardchar(c):
@@ -35,27 +35,28 @@ def createLangDistribution(line, distribution=None):
     distribution = df.removeBelowMinimal(distribution, MINIMAL_OCCURANCE)
     distribution = df.sortdict(distribution)
     avgdict = df.percetageDictCalc(distribution)
-    
+
     return avgdict
 
-def createDistroFormFile(startpath):
 
+def createDistroFormFile(startpath):
     distribution = {}
 
     with open(startpath, encoding='utf-8') as f:
         for line in f:
-            createLangDistribution(line,distribution)
+            createLangDistribution(line, distribution)
 
     distribution = df.removeBelowMinimal(distribution, MINIMAL_OCCURANCE)
     distribution = df.sortdict(distribution)
     avgdict = df.percetageDictCalc(distribution)
 
     return avgdict
-    #Debug info
+    # Debug info
     #
-    #for i in distribution:
+    # for i in distribution:
     #    print("Keys: {0} Count:{1} Percentage {2:0.4f}%".format(i, distribution[i], avgdict[i]))
     #
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

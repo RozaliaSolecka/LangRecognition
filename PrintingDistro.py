@@ -7,20 +7,19 @@ from CreateCompleteDistibution import loadCompleteDistro
 from dictfunctions import makearray, aligndicts
 
 
-def printDistribution(langname, distcore, distcore2=None,langname2=None):
-
-    #repair dada
+def printDistribution(langname, distcore, distcore2=None, langname2=None):
+    # repair dada
 
     if distcore2 is not None:
-        tmptuple=aligndicts(distcore,distcore2)
-        distcore=tmptuple[0]
-        distcore2=tmptuple[1]
+        tmptuple = aligndicts(distcore, distcore2)
+        distcore = tmptuple[0]
+        distcore2 = tmptuple[1]
 
         tmptuple = makearray(distcore)
         keys = tmptuple[0]
         values = tmptuple[1]
 
-        tmptuple=makearray(distcore2)
+        tmptuple = makearray(distcore2)
         keys2 = tmptuple[0]
         values2 = tmptuple[1]
 
@@ -52,19 +51,16 @@ def printDistribution(langname, distcore, distcore2=None,langname2=None):
                          color='g',
                          label=langname)
 
-
-
     plt.xlabel('Leters')
     plt.ylabel('Percentage [%]')
     plt.title('Letters Distribution')
     plt.legend()
 
-
-
     plt.show()
 
+
 if __name__ == "__main__":
-    dist=loadCompleteDistro()
+    dist = loadCompleteDistro()
     parser = argparse.ArgumentParser()
     parser.add_argument("lname", help="lang name",
                         type=str)
@@ -73,7 +69,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     if args.lname2 is not None:
-        dist2=dist[args.lname2]
+        dist2 = dist[args.lname2]
     else:
-        dist2=None
-    printDistribution(args.lname,dist[args.lname],dist2,args.lname2)
+        dist2 = None
+    printDistribution(args.lname, dist[args.lname], dist2, args.lname2)

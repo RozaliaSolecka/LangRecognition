@@ -7,27 +7,29 @@ LANGS = ["bul", "ces", "dan", "deu", "ell", "eng", "est", "fin", "fra", "gle", "
 
 
 def loadCompleteDistro():
-    filename = 'coredata\\CoreDistro'
+    filename = 'CoreDistro'
 
     with open(filename, 'rb') as file:
         DistroCore = pickle.load(file)
     print("Loaded CoreDistro!")
-    return  DistroCore
+    return DistroCore
+
 
 def saveCompleteDistro():
-    filename = 'coredata\\CoreDistro'
+    filename = 'CoreDistro'
     print("Starting loading lang distribution...")
     DistroCore = {}
     i = 0
     for x in LANGS:
         DistroCore[x] = ld.createDistroFormFile("traindata\\" + x + ".txt")
-        i+=1
-        print("\"" + x + "\" lang ("+str(i)+"/"+str(len(LANGS))+") Loaded!")
+        i += 1
+        print("\"" + x + "\" lang (" + str(i) + "/" + str(len(LANGS)) + ") Loaded!")
     print("Complete!")
 
     with open(filename, 'wb') as file:
         pickle.dump(DistroCore, file)
     print("Saved CoreDistro!")
+
 
 if __name__ == "__main__":
     saveCompleteDistro()
