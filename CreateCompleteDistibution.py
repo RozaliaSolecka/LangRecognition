@@ -12,7 +12,8 @@ def loadCompleteDistro():
     with open(filename, 'rb') as file:
         DistroCore = pickle.load(file)
     print("Loaded CoreDistro!")
-    return  DistroCore
+    return DistroCore
+
 
 def saveCompleteDistro():
     filename = 'coredata\\CoreDistro'
@@ -21,13 +22,14 @@ def saveCompleteDistro():
     i = 0
     for x in LANGS:
         DistroCore[x] = ld.createDistroFormFile("traindata\\" + x + ".txt")
-        i+=1
-        print("\"" + x + "\" lang ("+str(i)+"/"+str(len(LANGS))+") Loaded!")
+        i += 1
+        print("\"" + x + "\" lang (" + str(i) + "/" + str(len(LANGS)) + ") Loaded!")
     print("Complete!")
 
     with open(filename, 'wb') as file:
         pickle.dump(DistroCore, file)
     print("Saved CoreDistro!")
+
 
 if __name__ == "__main__":
     saveCompleteDistro()
