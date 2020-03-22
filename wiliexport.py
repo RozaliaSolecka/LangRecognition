@@ -1,7 +1,6 @@
 LANGS = ["bul", "ces", "dan", "deu", "ell", "eng", "est", "fin", "fra", "gle", "hrv", "hun",
          "ita", "lav", "lit", "mlt", "nld", "pol", "por", "ron", "slk", "slv", "spa", "swe"]
 
-
 def maketraindata():
     print("Start")
     startpath = 'wili-2018\\'
@@ -46,8 +45,8 @@ def maketestdata():
     for line in langnamesraw:
         langnames.append(line.rstrip('\n'))
 
-    newtestx = open("testdata\\" + "NewTrainX.txt", "wb")
-    newtesty = open("testdata\\" + "NewTrainY.txt", "w")
+    newtestx = open("testdata\\"+"NewTrainX.txt", "wb")
+    newtesty = open("testdata\\"+ "NewTrainY.txt", "w")
 
     for x in range(len(langlines)):
         if langnames[x] in LANGS:
@@ -56,12 +55,8 @@ def maketestdata():
     newtestx.close()
     newtesty.close()
     print("Processing Complete!")
-
-
 def main():
     maketraindata()
     maketestdata()
-
-
 if __name__ == "__main__":
     main()
