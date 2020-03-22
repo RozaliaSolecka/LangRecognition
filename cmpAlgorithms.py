@@ -1,2 +1,2 @@
 def mycompare1(unnowndist, distcore):
-    pass
+    return 'pol'
