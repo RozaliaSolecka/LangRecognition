@@ -1,53 +1,61 @@
 import copy
 
+#
+# A to je nasza klasa od trzymania w niej rozkladu
+# W zasadzie jest to pythonowy Dictionary z kilkoma dodatkowymi funkcjami
+#
 
-def removeBelowMinimal(distribution, minimalno):
-    newdist = {}
-    for i in distribution.keys():
-        if distribution[i] > minimalno:
+class LangDistro(dict):
+    def removeBelowMinimal(distribution, minimalno):
+        dis=copy.deepcopy(distribution)
+        for i in dis.keys():
+            if dis[i] < minimalno:
+                distribution.pop(i)
+
+    def sort(distribution):
+        newdist = {}
+        for i in sorted(distribution.keys()):
             newdist[i] = distribution[i]
-    return newdist
+
+        distribution.clear()
+
+        for i in newdist.keys():
+            distribution[i]=newdist[i]
+
+    def makePercentage(distribution):
+        sumdist = 0
+        avgdict = {}
+        for i in distribution:
+            sumdist += distribution[i]
+        for i in distribution:
+            avgdict[i] = (distribution[i] / sumdist) * 100
 
 
-def sortdict(distribution):
-    newdist = {}
-    for i in sorted(distribution.keys()):
-        newdist[i] = distribution[i]
-    return newdist
+        distribution.clear()
 
+        for i in avgdict.keys():
+            distribution[i] = avgdict[i]
 
-def percetageDictCalc(distribution):
-    sumdist = 0
-    avgdict = {}
-    for i in distribution:
-        sumdist += distribution[i]
-    for i in distribution:
-        avgdict[i] = (distribution[i] / sumdist) * 100
-    return avgdict
+    def retArrays(distribution):
+        keys = []
+        values = []
+        for key, value in distribution.items():
+            keys.append(key)
+            values.append(value)
 
+        return (keys, values)
 
-def makearray(distribution):
-    keys = []
-    values = []
-    for key, value in distribution.items():
-        keys.append(key)
-        values.append(value)
+    def alain(dist1, dist2):
+        dist = copy.deepcopy(dist1)
+        for key, value in dist2.items():
+            if key not in dist:
+                dist[key] = 0
 
-    return (keys, values)
+        dist.sort()
+        return dist
 
-
-def aligndicts(dist1, dist2):
-    newDist1 = copy.deepcopy(dist1)
-    newDist2 = copy.deepcopy(dist2)
-
-    for key, value in newDist1.items():
-        if key not in newDist2:
-            newDist2[key] = 0
-
-    for key, value in newDist2.items():
-        if key not in newDist1:
-            newDist1[key] = 0
-
-    newDist1 = sortdict(newDist1)
-    newDist2 = sortdict(newDist2)
-    return (newDist1, newDist2)
+    def appenddist(self, c):
+        if c in self:
+            self[c] += 1
+        else:
+            self[c] = 1

@@ -1,22 +1,21 @@
 import pickle
 
-import createDist as ld
+import generateDistribution as ld
+from globalVariables import LANGS, CORE_DISTRO_FILEPATH
 
-LANGS = ["bul", "ces", "dan", "deu", "ell", "eng", "est", "fin", "fra", "gle", "hrv", "hun",
-         "ita", "lav", "lit", "mlt", "nld", "pol", "por", "ron", "slk", "slv", "spa", "swe"]
-
+#
+#W tym skrypcie tworzymy oraz ladujemy cala nasza baze rozkladow wszystkich jezykow
+#
+#
 
 def loadCompleteDistro():
-    filename = 'CoreDistro'
-
-    with open(filename, 'rb') as file:
+    with open(CORE_DISTRO_FILEPATH, 'rb') as file:
         DistroCore = pickle.load(file)
     print("Loaded CoreDistro!")
     return DistroCore
 
 
 def saveCompleteDistro():
-    filename = 'CoreDistro'
     print("Starting loading lang distribution...")
     DistroCore = {}
     i = 0
@@ -26,7 +25,7 @@ def saveCompleteDistro():
         print("\"" + x + "\" lang (" + str(i) + "/" + str(len(LANGS)) + ") Loaded!")
     print("Complete!")
 
-    with open(filename, 'wb') as file:
+    with open(CORE_DISTRO_FILEPATH, 'wb') as file:
         pickle.dump(DistroCore, file)
     print("Saved CoreDistro!")
 
