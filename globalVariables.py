@@ -16,3 +16,5 @@ FILE_ANSWER_PATH = "testdata\\NewTrainY.txt"
 CORE_DISTRO_FILEPATH = 'CoreDistro'
 
 TRAIN_DATA_PATH = 'wili-2018\\'
+
+EPSILON = 0.01

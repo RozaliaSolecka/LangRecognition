@@ -43,7 +43,7 @@ def runDistroTests():
 
         # Tutaj wywolujemy nasz algorytm porowujacy rozklad tesktu w nieznanym jezyku z naszymi zapisanymi jezykaim
         # Porownojemy je i zwracamy najbardziej nazwe najbardziej podobnego jezyka
-        result = mycompare1(newdistro, dist)
+        result = KullbackLeibner(newdistro, dist)
 
         #Jezeli zly jezyk zwiekszamy liczne porazek
         if result != ansline[x]:
