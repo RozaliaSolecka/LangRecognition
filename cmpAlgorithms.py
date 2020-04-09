@@ -35,15 +35,17 @@ def KullbackLeibner(unnowndist, distcore):
     corect_lang = ""
 
     for langname in distcore.keys():
-        complete_known_dist = MinMaxNormalise(distcore[langname].alain(unnowndist))
-        completen_unnown_dist = MinMaxNormalise(unnowndist.alain(distcore[langname]))
-        value = CalculateKullbackLeibner(complete_known_dist, completen_unnown_dist)
+        value=KullbackLeibnerIteration(distcore[langname].alain(unnowndist),unnowndist.alain(distcore[langname]))
         if value < min_value:
             min_value = value
             corect_lang = langname
-
     return corect_lang
 
+def KullbackLeibnerIteration(one,two):
+    complete_known_dist = MinMaxNormalise(one)
+    completen_unnown_dist = MinMaxNormalise(two)
+    value = CalculateKullbackLeibner(complete_known_dist, completen_unnown_dist)
+    return value
 
 def MinMaxNormalise(distribution):
     for x in distribution.keys():
