@@ -1,9 +1,8 @@
 from dictfunctions import LangDistro
 from globalVariables import FILE_TEST_PATH, FILE_ANSWER_PATH
 from DistributionCoreHandler import loadCompleteDistro
-from cmpAlgorithms import mycompare1
+from cmpAlgorithms import mycompare1, KullbackLeibner
 from generateDistribution import createLangDistribution
-
 #
 # Glowny plik testujacy nasze algorytmy
 #

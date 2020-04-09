@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from DistributionCoreHandler import loadCompleteDistro
 from dictfunctions import LangDistro
 
+
 #
 # Bywa tak ze chcemy zobaczyc jak wyglaja rozklady dwoch roznych jezykow bo cos sie nam nie zgadza
 # Ten skrypt to nam pokaze
@@ -15,7 +16,7 @@ def printDistribution(langname, distcore, distcore2=None, langname2=None):
     # repair dada
 
     if distcore2 is not None:
-        #Wyrownujemy nasze rozklady aby mialy ten sam sklad liter
+        # Wyrownujemy nasze rozklady aby mialy ten sam sklad liter
         newdistro1 = distcore.alain(distcore2)
         newdistro2 = distcore2.alain(distcore)
 
@@ -32,10 +33,9 @@ def printDistribution(langname, distcore, distcore2=None, langname2=None):
         keys = tmptuple[0]
         values = tmptuple[1]
 
-    #Magiczny myk bo inaczej zle to wyglada na wykresach
+    # Magiczny myk bo inaczej zle to wyglada na wykresach
     for i in range(len(keys)):
         keys[i] = " " + keys[i] + " "
-
 
     matplotlib.rc('font', family='Arial')
     # Wyswietlamy!
@@ -63,7 +63,6 @@ def printDistribution(langname, distcore, distcore2=None, langname2=None):
     plt.legend()
 
     plt.show()
-
 
 
 # Wstawiamy w postaci argumentow jakie jezyki chemy wyswietlic 1 wymagany 2 opcjonalny np. pol -lname2 eng
