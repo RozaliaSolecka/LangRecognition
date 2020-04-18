@@ -1,62 +1,106 @@
 from dictfunctions import LangDistro
 from globalVariables import FILE_TEST_PATH, FILE_ANSWER_PATH
 from DistributionCoreHandler import loadCompleteDistro
-from cmpAlgorithms import mycompare1, KullbackLeibner
+from cmpAlgorithms import KullbackLeibner, BhattacharyyaDistance, Hellinger
 from generateDistribution import createLangDistribution
+
+
 #
 # Glowny plik testujacy nasze algorytmy
 #
 
 
 def runDistroTests():
-    #ladujemy nasz korpus
+    # ladujemy nasz korpus
     dist = loadCompleteDistro()
 
-    sumtests = LangDistro() #ile testow z danego jezyka bylo
-    sumfails = LangDistro() #ile testow nasz algorytm zawalil
+    sumtests = []
+    sumfails = []
+    sumtests.append(LangDistro())  # ile testow z danego jezyka bylo
+    sumtests.append(LangDistro())
+    sumtests.append(LangDistro())
+
+    sumfails.append(LangDistro())  # ile testow nasz algorytm zawalil
+    sumfails.append(LangDistro())
+    sumfails.append(LangDistro())
+
     ansline = []
     print("Runing tests...")
     counter = 0
-    #laduemy linijki testow
+    # laduemy linijki testow
     with open(FILE_TEST_PATH, "r", encoding='utf-8') as testf:
         testline = testf.readlines()
-    #i jezykow w ktorych zostaly napisane - nasze poprawne odpowiedzi
+    # i jezykow w ktorych zostaly napisane - nasze poprawne odpowiedzi
     with open(FILE_ANSWER_PATH, "r", encoding='utf-8') as answerf:
         anslineraw = answerf.readlines()
 
-    #obcinamy zbedny znak konca lini
+    # obcinamy zbedny znak konca lini
     for x in anslineraw:
         ansline.append(x.rstrip('\n'))
 
-    #Testujemy!
+    # Testujemy!
     for x in range(len(ansline)):
 
-        #Zwiekszamy ilosc testow o 1
-        sumtests.appenddist(ansline[x])
-        #Przygotowywujemy licznik do testow oblanych z akrutalnego jezyka
-        if ansline[x] not in sumfails:
-            sumfails[ansline[x]] = 0
+        # Zwiekszamy ilosc testow o 1
+        sumtests[0].appenddist(ansline[x])
+        sumtests[1].appenddist(ansline[x])
+        sumtests[2].appenddist(ansline[x])
+        # Przygotowywujemy licznik do testow oblanych z akrutalnego jezyka
+        if ansline[x] not in sumfails[0]:
+            sumfails[0][ansline[x]] = 0
+            sumfails[1][ansline[x]] = 0
+            sumfails[2][ansline[x]] = 0
 
-        #analizujemy teskst
+        # analizujemy teskst
         newdistro = createLangDistribution(testline[x])
 
         # Tutaj wywolujemy nasz algorytm porowujacy rozklad tesktu w nieznanym jezyku z naszymi zapisanymi jezykaim
         # Porownojemy je i zwracamy najbardziej nazwe najbardziej podobnego jezyka
-        result = KullbackLeibner(newdistro, dist)
+        result1 = BhattacharyyaDistance(newdistro, dist)
+        result2 = KullbackLeibner(newdistro, dist)
+        result3 = Hellinger(newdistro, dist)
 
-        #Jezeli zly jezyk zwiekszamy liczne porazek
-        if result != ansline[x]:
-            sumfails.appenddist(ansline[x])
+        # Jezeli zly jezyk zwiekszamy liczne porazek
+        if result1 != ansline[x]:
+            sumfails[0].appenddist(ansline[x])
+        if result2 != ansline[x]:
+            sumfails[1].appenddist(ansline[x])
+        if result3 != ansline[x]:
+            sumfails[2].appenddist(ansline[x])
         counter += 1
 
         print(f'Tested {counter}/{len(ansline)}')
 
-    #Wypisujemy statysyki
+
+
+    avg=[]
+    for i in range(3):
+        mysum=0
+        for x in sumtests[i].keys():
+            mysum+=(sumtests[i][x] - sumfails[i][x])/( sumtests[i][x]) * 100
+        avg.append(mysum/len(sumtests[i].keys()))
+
+    # Wypisujemy statysyki
     print("Printing Stats...")
-    for x in sumtests.keys():
-        print("Lang: \"{0}\" Failed: {1} Tested: {2} Accuracy: {3:0.3f}%".format(x, sumfails[x], sumtests[x],
-                                                                                 ((sumtests[x] - sumfails[x])
-                                                                                  / sumtests[x]) * 100))
+    print("Bhattacharyya:")
+    for x in sumtests[0].keys():
+        print("Lang: \"{0}\" Failed: {1} Tested: {2} Accuracy: {3:0.3f}%".format(x, sumfails[0][x], sumtests[0][x],
+                                                                                 ((sumtests[0][x] - sumfails[0][x])
+                                                                                  / sumtests[0][x]) * 100))
+    print("Avg: "+str(avg[0])+"%")
+    print("KullbackLeibner:")
+    for x in sumtests[1].keys():
+        print("Lang: \"{0}\" Failed: {1} Tested: {2} Accuracy: {3:0.3f}%".format(x, sumfails[1][x], sumtests[1][x],
+                                                                                 ((sumtests[1][x] - sumfails[1][x])
+                                                                                  / sumtests[1][x]) * 100))
+    print("Avg: " + str(avg[1]) + "%")
+    print("Hellinger:")
+    for x in sumtests[2].keys():
+        print("Lang: \"{0}\" Failed: {1} Tested: {2} Accuracy: {3:0.3f}%".format(x, sumfails[2][x], sumtests[2][x],
+                                                                                 ((sumtests[2][x] - sumfails[2][x])
+                                                                                  / sumtests[2][x]) * 100))
+    print("Avg: " + str(avg[2]) + "%")
+
 
 
 if __name__ == "__main__":
