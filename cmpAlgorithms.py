@@ -1,15 +1,13 @@
 #
-# Tu beda nasze algorytmy porownojace rozklady
+# Tu znajduja sie nasze funckje porownojace rozklady.
 #
 
 
-# nasza funkcja 1
-import sys
 from globalVariables import EPSILON
 import math
 
-
-def mycompare1(unnowndist, distcore):
+#Hellinger
+def Hellinger(unnowndist, distcore):
     max_probability = 1e6
     language = ""
     for lang in distcore.keys():   # tablica ze wszytskimi skrótami języków, i - język
@@ -29,7 +27,7 @@ def mycompare1(unnowndist, distcore):
 
     return language
 
-
+#KullbackLeibner
 def KullbackLeibner(unnowndist, distcore):
     min_value = 1e10
     corect_lang = ""
@@ -59,3 +57,29 @@ def CalculateKullbackLeibner(unnowndist, knowndist):
     for letter in knowndist.keys():
         finalsum += knowndist[letter] * math.log(knowndist[letter] / unnowndist[letter], 2)
     return finalsum
+
+#BhattacharyyaDistance
+def BhattacharyyaDistance(unknowndist, distcore):
+    min_value = 1e10
+    corect_lang = ""
+
+    for langname in distcore.keys():
+        complete_known_dist = MinMaxNormalise(distcore[langname].alain(unknowndist))
+        completen_unnown_dist = MinMaxNormalise(unknowndist.alain(distcore[langname]))
+        value = CalculateBhattacharyyaDistance(complete_known_dist, completen_unnown_dist)
+        if value < min_value:
+            min_value = value
+            corect_lang = langname
+
+    return corect_lang
+
+
+def CalculateBhattacharyyaDistance(unknowndist, knowndist):
+    finalsum = 0
+    for letter in knowndist.keys():
+        finalsum += math.sqrt(knowndist[letter] * unknowndist[letter])
+
+    # obliczyliśmy współczynnik Bhattacharyya
+    # zwracamy -ln(finalsum) czyli odległość Bhattacharyya
+
+    return math.log(finalsum) * (-1)
