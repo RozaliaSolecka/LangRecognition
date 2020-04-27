@@ -38,10 +38,10 @@ def maketestdata():
     print("Start")
     langlines = []
     langnames = []
-    with open(TRAIN_DATA_PATH + "x_test.txt", 'rb') as f:
+    with open(TRAIN_DATA_PATH + "x_train.txt", 'rb') as f:
         for line in f:
             langlines.append(line)
-    with open(TRAIN_DATA_PATH + "y_test.txt") as f:
+    with open(TRAIN_DATA_PATH + "y_train.txt") as f:
         langnamesraw = f.readlines()
 
     for line in langnamesraw:
